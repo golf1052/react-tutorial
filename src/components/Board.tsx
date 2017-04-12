@@ -4,9 +4,26 @@ import { Square } from './Square';
 export interface BoardProps {
 }
 
-export class Board extends React.Component<BoardProps, undefined> {
+export interface BoardState {
+    squares: string[];
+}
+
+export class Board extends React.Component<BoardProps, BoardState> {
+    constructor() {
+        super();
+        this.state = {
+            squares: Array(9).fill(null)
+        };
+    }
+
     renderSquare(i: number) {
-        return <Square value={i} />;
+        return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
+    }
+
+    handleClick(i: number) {
+        const squares = this.state.squares.slice();
+        squares[i] = 'X';
+        this.setState({squares: squares});
     }
 
     render() {
